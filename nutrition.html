@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Nutrition | NutriCare</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+canvas { max-width: 100%; }
+.chart-box { height: 180px; }
+#weeklyChartBox { height: 220px; }
+</style>
+</head>
+
+<body>
+<!------------NAVIGATION BAR----------------->
+<nav class="navbar navbar-expand-lg navbar-dark bg-success"> 
+  <div class="container"> 
+    <a class="navbar-brand" href="index.html">NutriCare</a> 
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"> 
+      <span class="navbar-toggler-icon"></span> </button> 
+      <div class="collapse navbar-collapse" id="navbarNav"> 
+        <ul class="navbar-nav ms-auto"> 
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Home</a>
+          </li>
+           <li class="nav-item">
+            <a class="nav-link active" href="nutrition.html">Nutrition</a>
+          </li> 
+          <li class="nav-item">
+            <a class="nav-link" href="recipes.html">Recipes</a>
+          </li> 
+          <li class="nav-item">
+            <a class="nav-link" href="fitness.html">Fitness</a>
+          </li> 
+          <li class="nav-item" id="authMenu"></li>
+
+        </ul> 
+      </div> 
+    </div> 
+  </nav>
+
+
+<section class="container py-5">
+<div class="nutrition-card">
+
+<h2 class="text-center fw-bold mb-4">Nutrition Tracker 🥗</h2>
+
+<!----------- INPUT ------------>
+<div class="row justify-content-center">
+<div class="col-md-6">
+
+  <label class="form-label fw-semibold">Select Date</label>
+  <input id="selectedDate" type="date" class="form-control mb-3">
+
+  <label class="form-label fw-semibold">Food Name</label>
+  <input id="foodName" class="form-control mb-3" placeholder="e.g. Rice, Chicken Breast">
+
+  <label class="form-label fw-semibold text-dark">Select Meal Type</label>
+  <select id="mealType" class="form-control mb-3 meal-select">
+    <option value="" disabled selected> meal type</option>
+    <option value="breakfast">Breakfast</option>
+    <option value="lunch">Lunch</option>
+    <option value="dinner">Dinner</option>
+    <option value="snack">Snack</option>
+  </select>
+
+  <label class="form-label fw-semibold">Calories</label>
+  <input id="calories" type="number" class="form-control mb-3" placeholder="e.g. 250">
+
+  <label class="form-label fw-semibold">Daily Goal</label>
+  <select id="goalCalories" class="form-control mb-3">
+    <option value="2000">2000 kcal</option>
+    <option value="1800">1800 kcal</option>
+    <option value="2200">2200 kcal</option>
+  </select>
+
+<button class="btn btn-success w-100" onclick="addFood()">Add</button>
+
+</div>
+</div>
+<!------------HISTORY SECTION--------- -->
+<div class="mt-4 text-center">
+
+<h5 class="mb-2">📅 History Viewer</h5>
+
+<input id="historyDate" type="date" class="form-control w-50 mx-auto">
+
+<button class="btn btn-primary mt-2" onclick="loadHistoryDate()">
+  View Date
+</button>
+
+</div>
+
+<!------------- DASHBOARD ------------->
+<div class="mt-4 text-center">
+
+<h4>Total: <span id="totalCalories">0</span></h4>
+<h5>Goal: <span id="goalDisplay">2000</span></h5>
+<h5>Left: <span id="caloriesLeft">2000</span></h5>
+
+<div class="chart-box">
+<canvas id="ringChart"></canvas>
+</div>
+
+</div>
+
+<!-------- WEEKLY ------------>
+<div class="dashboard-card mt-4">
+<h6 class="text-center">Weekly Trend</h6>
+<div id="weeklyChartBox">
+<canvas id="weeklyChart"></canvas>
+</div>
+</div>
+
+<!--------------- PIE ----------->
+<div class="dashboard-card mt-4 text-center">
+<h6>Meal Distribution</h6>
+<div style="height:260px; display:flex; justify-content:center;">
+<canvas id="pieChart"></canvas>
+</div>
+</div>
+
+<ul id="foodList" class="list-group mt-4"></ul>
+
+</div>
+</section>
+
+<script>
+
+/* ================= STATE ================= */
+let total = 0;
+let goal = 2000;
+let goalByDate = {};
+
+let ringChart, pieChart, weeklyChart;
+let goalReachedDays = {};
+
+/* GLOBAL STORAGE  */
+let dailyData = JSON.parse(localStorage.getItem("dailyData")) || {};
+
+/* ================= ELEMENTS ================= */
+const foodList = document.getElementById("foodList");
+const ringCanvas = document.getElementById("ringChart");
+const pieCanvas = document.getElementById("pieChart");
+const weeklyCanvas = document.getElementById("weeklyChart");
+
+/* ================= GOAL ================= */
+document.getElementById("goalCalories").addEventListener("change", function () {
+  const date = document.getElementById("selectedDate").value || getToday();
+
+  goalByDate[date] = Number(this.value);
+  updateAll();
+});
+
+/* ================= lOAD HISTORY ================= */
+function loadHistoryDate() {
+
+const date = document.getElementById("historyDate").value;
+
+if (!date) {
+  alert("Please select a date!");
+  return;
+}
+
+/* update main tracker date */
+document.getElementById("selectedDate").value = date;
+
+/* ensure structure exists */
+if (!dailyData[date]) {
+  dailyData[date] = {
+    total: 0,
+    meals: { breakfast: 0, lunch: 0, dinner: 0, snack: 0 },
+    foods: []
+  };
+}
+
+/* refresh UI */
+updateAll();
+}
+
+/* ================= SYNC DATES ================= */
+document.getElementById("selectedDate").addEventListener("change", function () {
+  document.getElementById("historyDate").value = this.value;
+  updateAll();
+});
+
+/* ================= SELECTED DATE ================= */
+document.getElementById("selectedDate").addEventListener("change", () => {
+  updateAll();
+});
+
+function getSafeDate() {
+  const date = document.getElementById("selectedDate").value;
+  if (!date) return getToday();
+  return date;
+}
+
+/* ================= ADD FOOD ================= */
+function addFood() {
+
+const foodNameEl = document.getElementById("foodName");
+const caloriesEl = document.getElementById("calories");
+const mealTypeEl = document.getElementById("mealType");
+
+const name = foodNameEl.value.trim();
+const cal = Number(caloriesEl.value);
+const meal = mealTypeEl.value;
+
+if (!name || !meal || isNaN(cal) || cal <= 0) {
+  alert("Please enter valid food name, meal type and calories!");
+  return;
+}
+
+const selectedDate = getSafeDate();
+
+if (!dailyData[selectedDate] || !dailyData[selectedDate].meals) {
+  dailyData[selectedDate] = {
+    total: 0,
+    meals: { breakfast: 0, lunch: 0, dinner: 0, snack: 0 },
+    foods: []
+  };
+}
+
+dailyData[selectedDate].total =
+  Number(dailyData[selectedDate].total) || 0;
+
+dailyData[selectedDate].meals[meal] =
+  Number(dailyData[selectedDate].meals[meal]) || 0;
+
+dailyData[selectedDate].total += cal;
+if (!dailyData[selectedDate].meals) {
+  dailyData[selectedDate].meals = {
+    breakfast: 0,
+    lunch: 0,
+    dinner: 0,
+    snack: 0
+  };
+}
+
+dailyData[selectedDate].meals[meal] =
+  (dailyData[selectedDate].meals[meal] || 0) + cal;
+
+dailyData[selectedDate].foods.push({ name, cal, meal });
+
+localStorage.setItem("dailyData", JSON.stringify(dailyData));
+
+foodNameEl.value = "";
+caloriesEl.value = "";
+mealTypeEl.value = "";
+
+renderFoodList(selectedDate);
+updateAll();  
+}
+
+/*renderfood*/
+function renderFoodList(date) {
+
+foodList.innerHTML = ""; 
+
+if (!dailyData[date]?.foods) return;
+
+dailyData[date].foods.forEach((item, index) => {
+
+const li = document.createElement("li");
+li.className = "list-group-item d-flex justify-content-between align-items-center";
+
+li.innerHTML = `
+<span><b>${item.name}</b> (${item.meal}) - ${item.cal} kcal</span>
+<button class="btn btn-sm btn-danger">X</button>
+`;
+
+li.querySelector("button").onclick = () => {
+
+dailyData[date].total -= item.cal;
+dailyData[date].meals[item.meal] -= item.cal;
+
+dailyData[date].foods.splice(index, 1);
+
+localStorage.setItem("dailyData", JSON.stringify(dailyData));
+
+updateAll();
+};
+
+foodList.appendChild(li);
+});
+}
+
+/* ================= CHECK GOAL MESSAGE ================= */
+function checkGoalAchievement(date, total, goal) {
+
+if (total >= goal && !goalReachedDays[date]) {
+  goalReachedDays[date] = true;
+  alert("🎉 Congratulations! You have reached your daily calorie goal!");
+}
+
+if (total < goal) {
+  goalReachedDays[date] = false;
+}
+
+}
+
+/* ================= UPDATE ================= */
+function updateAll() {
+
+const date = getSafeDate();
+
+const data = dailyData[date] || {
+  total: 0,
+  meals: { breakfast: 0, lunch: 0, dinner: 0, snack: 0 },
+  foods: []
+};
+
+const safeTotal = Number(data.total) || 0;
+const safeGoal = Number(goalByDate[date]) || 2000;
+
+/* UI */
+document.getElementById("totalCalories").innerText = safeTotal;
+document.getElementById("goalDisplay").innerText = safeGoal;
+document.getElementById("caloriesLeft").innerText =
+  Math.max(safeGoal - safeTotal, 0);
+checkGoalAchievement(date, safeTotal, safeGoal);
+
+/* IMPORTANT: render list */
+renderFoodList(date);
+
+/* charts */
+updateRing(data, safeGoal);
+updatePie();
+updateWeekly();
+}
+
+/* ================= RING ================= */
+function updateRing(data, goal) {
+
+if (ringChart) ringChart.destroy();
+
+const safeTotal = Number(data.total) || 0;
+const safeGoal = Number(goal) || 2000;
+
+ringChart = new Chart(ringCanvas, {
+type: "doughnut",
+data: {
+datasets: [{
+data: [safeTotal, Math.max(safeGoal - safeTotal, 0)],
+backgroundColor: ["#28a745", "#e9ecef"]
+}]
+},
+options: {
+cutout: "75%",
+plugins: { legend: { display: false } }
+}
+});
+}
+
+/* ================= PIE ================= */
+function updatePie() {
+
+if (pieChart) pieChart.destroy();
+
+const date = getSafeDate();
+
+const meals = dailyData[date]?.meals || {
+  breakfast: 0,
+  lunch: 0,
+  dinner: 0,
+  snack: 0
+};
+
+pieChart = new Chart(pieCanvas, {
+type: "pie",
+data: {
+labels: ["Breakfast","Lunch","Dinner","Snack"],
+datasets: [{
+data: [
+  Number(meals.breakfast) || 0,
+  Number(meals.lunch) || 0,
+  Number(meals.dinner) || 0,
+  Number(meals.snack) || 0
+],
+backgroundColor: ["#28a745","#ffc107","#dc3545","#17a2b8"]
+}]
+}
+});
+}
+
+/* ================= WEEKLY ================= */
+function updateWeekly() {
+
+if (weeklyChart) weeklyChart.destroy();
+
+const data = getAllDays();
+
+weeklyChart = new Chart(weeklyCanvas, {
+type: "line",
+data: {
+labels: data.labels,
+datasets: [{
+label: "Calories (last 7 days)",
+data: data.arr,
+borderColor: "#28a745",
+backgroundColor: "rgba(40,167,69,0.1)",
+fill: true,
+tension: 0.4,
+spanGaps: true 
+}]
+},
+options: {
+responsive: true,
+maintainAspectRatio: false
+}
+});
+}
+
+/* ================= HELPERS ================= */
+function formatDate(d) {
+  return d.getFullYear() + "-" +
+    String(d.getMonth() + 1).padStart(2, "0") + "-" +
+    String(d.getDate()).padStart(2, "0");
+}
+
+/* ================= WEEK DATA ================= */
+function getAllDays() {
+
+let labels = [];
+let arr = [];
+
+const endDate = new Date(getSafeDate()); // 👈 IMPORTANT: anchor to selected date
+
+for (let i = 6; i >= 0; i--) {
+
+  let d = new Date(endDate);
+  d.setDate(endDate.getDate() - i);
+
+  let key = formatDate(d);
+
+  labels.push(d.toLocaleDateString("en-MY", {
+    day: "2-digit",
+    month: "short"
+  }));
+
+  arr.push(Number(dailyData[key]?.total) || 0);
+}
+
+return { labels, arr };
+}
+
+/* ================= TODAY ================= */
+function getToday() {
+  return new Date().toISOString().split("T")[0];
+}
+
+/* ================= INIT ================= */
+window.onload = () => {
+
+const today = getToday();
+
+/* set date */
+document.getElementById("selectedDate").value = today;
+document.getElementById("historyDate").value = today;
+
+/* ensure today exists */
+if (!dailyData[today]) {
+  dailyData[today] = {
+    total: 0,
+    meals: { breakfast: 0, lunch: 0, dinner: 0, snack: 0 },
+    foods: []
+  };
+}
+
+/* force refresh everything */
+renderFoodList(today);
+updateAll();
+};
+</script>
+
+<!-- ===============================
+     CHATBOT
+================================ -->
+
+<button
+    id="chatButton"
+    class="chat-button"
+    aria-label="Open NutriCare chatbot"
+    title="Chat with NutriCare"
+>
+    💬
+</button>
+
+<div
+    id="chatWindow"
+    class="chat-window"
+    aria-label="NutriCare chatbot"
+>
+
+    <div class="chat-header">
+
+        <div class="chat-header-info">
+
+            <strong>NutriCare Assistant</strong>
+
+            <small>
+                Nutrition Support
+            </small>
+
+        </div>
+
+        <button
+            id="chatClose"
+            class="chat-close"
+            aria-label="Close chatbot"
+            title="Close"
+        >
+            &times;
+        </button>
+
+    </div>
+
+    <div
+        id="chatBody"
+        class="chat-body"
+    >
+
+        <div class="bot-message">
+
+            👋 Hi! I'm the NutriCare Assistant.
+
+            <br>
+
+            How can I help you with nutrition today?
+
+        </div>
+
+    </div>
+
+    <div class="chat-input-area">
+
+        <input
+            type="text"
+            id="chatInput"
+            placeholder="Type your message..."
+            autocomplete="off"
+            aria-label="Chat message"
+        >
+
+        <button
+            id="chatSend"
+            aria-label="Send message"
+            title="Send"
+        >
+            ➤
+        </button>
+
+    </div>
+
+</div>
+
+<script src="js/auth.js"></script>
+
+<script>requireLogin();</script>
+
+<script src="js/chatbot.js"></script>
+
+</body>
+</html>

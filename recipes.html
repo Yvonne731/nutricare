@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Recipes | NutriCare</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+  <!--navigation-->
+<nav class="navbar navbar-expand-lg navbar-dark bg-success">
+  <div class="container">
+
+    <!-- FIX 1: logo should go home -->
+    <a class="navbar-brand" href="index.html">NutriCare</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">Home</a>
+        </li>
+
+        <!-- FIX 2: correct link -->
+        <li class="nav-item">
+          <a class="nav-link" href="nutrition.html">Nutrition</a>
+        </li>
+
+        <!-- ACTIVE should be HERE -->
+        <li class="nav-item">
+          <a class="nav-link active" href="recipes.html">Recipes</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="fitness.html">Fitness</a>
+        </li>
+
+        <li class="nav-item" id="authMenu"></li>
+
+
+      </ul>
+    </div>
+
+  </div>
+</nav>
+
+<section class="text-center py-5">
+  <h1 class="fw-bold">Healthy Recipes 🍓</h1>
+  <p class="text-muted">Simple, aesthetic and student-friendly meals</p>
+</section>
+
+<!-- FILTER BUTTONS -->
+<div class="container text-center mb-4">
+  <div class="d-inline-block">
+    <button class="btn btn-success me-2 filter-btn" data-filter="all">All</button>
+    <button class="btn btn-outline-success me-2 filter-btn" data-filter="breakfast">Breakfast</button>
+    <button class="btn btn-outline-success me-2 filter-btn" data-filter="lunch">Lunch</button>
+    <button class="btn btn-outline-success filter-btn" data-filter="dinner">Dinner</button>
+  </div>
+</div>
+
+<!-- RECIPES GRID -->
+<section class="pb-5">
+  <div class="container">
+    <div class="row g-4">
+
+      <!-- Recipe 1 -->
+<div class="col-md-4" data-category="breakfast">
+  <div class="recipe-card"
+    data-title="Avocado Toast"
+    data-image="images/recipe1.jpg"
+    data-ingredients="Bread, avocado, egg, salt, pepper"
+    data-steps="Toast bread, mash avocado, spread on toast, add egg, season and serve">
+    <img src="images/recipe1.jpg">
+    <div class="recipe-overlay">
+      <h5>Avocado Toast</h5>
+    </div>
+  </div>
+</div>
+
+<!-- Recipe 2 -->
+<div class="col-md-4" data-category="breakfast">
+  <div class="recipe-card"
+    data-title="Fruit Bowl"
+    data-image="images/recipe2.jpg"
+    data-ingredients="Strawberries, blueberries, banana, yogurt, honey"
+    data-steps="Chop fruits, add into bowl, top with yogurt and drizzle honey">
+    <img src="images/recipe2.jpg">
+    <div class="recipe-overlay">
+      <h5>Fruit Bowl</h5>
+    </div>
+  </div>
+</div>
+
+<!-- Recipe 3 -->
+<div class="col-md-4" data-category="lunch">
+  <div class="recipe-card"
+    data-title="Chicken Salad"
+    data-image="images/recipe3.jpg"
+    data-ingredients="Chicken breast, lettuce, tomato, cucumber, dressing"
+    data-steps="Grill chicken, slice vegetables, mix together, add dressing">
+    <img src="images/recipe3.jpg">
+    <div class="recipe-overlay">
+      <h5>Chicken Salad</h5>
+    </div>
+  </div>
+</div>
+
+<!-- Recipe 4 -->
+<div class="col-md-4" data-category="breakfast">
+  <div class="recipe-card"
+    data-title="Yogurt Bowl"
+    data-image="images/recipe4.jpg"
+    data-ingredients="Greek yogurt, granola, banana, honey"
+    data-steps="Add yogurt to bowl, top with granola and banana, drizzle honey">
+    <img src="images/recipe4.jpg">
+    <div class="recipe-overlay">
+      <h5>Yogurt Bowl</h5>
+    </div>
+  </div>
+</div>
+
+<!-- Recipe 5 -->
+<div class="col-md-4" data-category="breakfast">
+  <div class="recipe-card"
+    data-title="Overnight Oats"
+    data-image="images/recipe5.jpg"
+    data-ingredients="Oats, milk, chia seeds, honey, fruits"
+    data-steps="Mix ingredients, refrigerate overnight, top with fruits before serving">
+    <img src="images/recipe5.jpg">
+    <div class="recipe-overlay">
+      <h5>Overnight Oats</h5>
+    </div>
+  </div>
+</div>
+
+<!-- Recipe 6 -->
+<div class="col-md-4" data-category="lunch">
+  <div class="recipe-card"
+    data-title="Tuna Sandwich"
+    data-image="images/recipe6.jpg"
+    data-ingredients="Bread, tuna, mayonnaise, lettuce"
+    data-steps="Mix tuna with mayo, spread on bread, add lettuce, assemble sandwich">
+    <img src="images/recipe6.jpg">
+    <div class="recipe-overlay">
+      <h5>Tuna Sandwich</h5>
+    </div>
+  </div>
+</div>
+
+<!-- Recipe 7 -->
+<div class="col-md-4" data-category="dinner">
+  <div class="recipe-card"
+    data-title="Salmon with Rice"
+    data-image="images/recipe7.jpg"
+    data-ingredients="Salmon, rice, broccoli, soy sauce"
+    data-steps="Cook rice, grill salmon, steam broccoli, serve with soy sauce">
+    <img src="images/recipe7.jpg">
+    <div class="recipe-overlay">
+      <h5>Salmon with Rice</h5>
+    </div>
+  </div>
+</div>
+
+<!-- Recipe 8 -->
+<div class="col-md-4" data-category="dinner">
+  <div class="recipe-card"
+    data-title="Baked Sweet Potato"
+    data-image="images/recipe8.jpg"
+    data-ingredients="Sweet potato, olive oil, salt"
+    data-steps="Bake at 200°C for 40 minutes, drizzle olive oil and add salt">
+    <img src="images/recipe8.jpg">
+    <div class="recipe-overlay">
+      <h5>Baked Sweet Potato</h5>
+    </div>
+  </div>
+</div>
+
+<!-- Recipe 9 -->
+<div class="col-md-4" data-category="dinner">
+  <div class="recipe-card"
+    data-title="Chicken Teriyaki Bowl"
+    data-image="images/recipe9.jpg"
+    data-ingredients="Chicken, rice, teriyaki sauce, vegetables"
+    data-steps="Cook chicken, add teriyaki sauce, serve with rice and vegetables">
+    <img src="images/recipe9.jpg">
+    <div class="recipe-overlay">
+      <h5>Chicken Teriyaki Bowl</h5>
+    </div>
+  </div>
+</div>
+
+<!-- Recipe 10 -->
+<div class="col-md-4" data-category="lunch">
+  <div class="recipe-card"
+    data-title="Pasta Salad"
+    data-image="images/recipe10.jpg"
+    data-ingredients="Pasta, cherry tomatoes, cucumber, olive oil, cheese"
+    data-steps="Cook pasta, mix with vegetables, add olive oil and cheese">
+    <img src="images/recipe10.jpg">
+    <div class="recipe-overlay">
+      <h5>Pasta Salad</h5>
+    </div>
+  </div>
+</div>
+
+<!-- Recipe 11 -->
+<div class="col-md-4" data-category="dinner">
+  <div class="recipe-card"
+    data-title="Garlic Shrimp Pasta"
+    data-image="images/recipe11.jpg"
+    data-ingredients="Pasta, shrimp, garlic, olive oil"
+    data-steps="Cook pasta, sauté shrimp with garlic, mix together with olive oil">
+    <img src="images/recipe11.jpg">
+    <div class="recipe-overlay">
+      <h5>Garlic Shrimp Pasta</h5>
+    </div>
+  </div>
+</div>
+
+<!-- Recipe 12 -->
+<div class="col-md-4" data-category="dinner">
+  <div class="recipe-card"
+    data-title="Stir-fry Vegetables"
+    data-image="images/recipe12.jpg"
+    data-ingredients="Broccoli, carrot, bell pepper, soy sauce, garlic"
+    data-steps="Stir-fry vegetables with garlic, add soy sauce, cook until tender">
+    <img src="images/recipe12.jpg">
+    <div class="recipe-overlay">
+      <h5>Stir-fry Vegetables</h5>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+</section>
+
+<!--FILTERING-->
+<script>
+const buttons = document.querySelectorAll(".filter-btn");
+const cards = document.querySelectorAll("[data-category]");
+
+buttons.forEach(btn => {
+  btn.addEventListener("click", () => {
+    const filter = btn.getAttribute("data-filter");
+
+    // 👉 FILTER LOGIC (same as before)
+    cards.forEach(card => {
+      if (filter === "all" || card.getAttribute("data-category") === filter) {
+        card.style.display = "block";
+      } else {
+        card.style.display = "none";
+      }
+    });
+
+    // 👉 NEW PART: BUTTON COLOR SWITCH
+    buttons.forEach(b => {
+      b.classList.remove("btn-success");
+      b.classList.add("btn-outline-success");
+    });
+
+    btn.classList.remove("btn-outline-success");
+    btn.classList.add("btn-success");
+  });
+});
+</script>
+
+<!-- RECIPE MODAL -->
+<div class="modal fade" id="recipeModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="recipeTitle">Recipe Title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        <img id="recipeImage" class="img-fluid mb-3" />
+
+        <h6>Ingredients</h6>
+        <p id="recipeIngredients"></p>
+
+        <h6>Steps</h6>
+        <p id="recipeSteps"></p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!--RECIPE DETAIL-->
+<script>
+const recipeCards = document.querySelectorAll(".recipe-card[data-title]");
+
+recipeCards.forEach(card => {
+  card.addEventListener("click", () => {
+
+    document.getElementById("recipeTitle").innerText = card.dataset.title;
+    document.getElementById("recipeImage").src = card.dataset.image;
+    document.getElementById("recipeIngredients").innerText = card.dataset.ingredients;
+    document.getElementById("recipeSteps").innerText = card.dataset.steps;
+
+    const modal = new bootstrap.Modal(document.getElementById("recipeModal"));
+    modal.show();
+  });
+});
+</script>
+
+<script src="js/auth.js"></script>
+
+<script>
+requireLogin();
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<footer class="bg-success text-white text-center p-3">
+  <p class="mb-0">© 2026 NutriCare</p>
+</footer>
+
+<!-- ===============================
+     CHATBOT
+================================ -->
+
+<button
+    id="chatButton"
+    class="chat-button"
+    aria-label="Open NutriCare chatbot"
+    title="Chat with NutriCare"
+>
+    💬
+</button>
+
+<div
+    id="chatWindow"
+    class="chat-window"
+    aria-label="NutriCare chatbot"
+>
+
+    <div class="chat-header">
+
+        <div class="chat-header-info">
+
+            <strong>NutriCare Assistant</strong>
+
+            <small>
+                Nutrition Support
+            </small>
+
+        </div>
+
+        <button
+            id="chatClose"
+            class="chat-close"
+            aria-label="Close chatbot"
+            title="Close"
+        >
+            &times;
+        </button>
+
+    </div>
+
+    <div
+        id="chatBody"
+        class="chat-body"
+    >
+
+        <div class="bot-message">
+
+            👋 Hi! I'm the NutriCare Assistant.
+
+            <br>
+
+            How can I help you with nutrition today?
+
+        </div>
+
+    </div>
+
+    <div class="chat-input-area">
+
+        <input
+            type="text"
+            id="chatInput"
+            placeholder="Type your message..."
+            autocomplete="off"
+            aria-label="Chat message"
+        >
+
+        <button
+            id="chatSend"
+            aria-label="Send message"
+            title="Send"
+        >
+            ➤
+        </button>
+
+    </div>
+
+</div>
+
+<script src="js/chatbot.js"></script>
+
+</body>
+</html>

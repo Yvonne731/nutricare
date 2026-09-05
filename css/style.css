@@ -1,0 +1,652 @@
+/* ================= GLOBAL ================= */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #fff7fa;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+/* soft texture */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: url("../images/noise.png");
+  opacity: 0.05;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* prevent image breaking */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* section spacing */
+section {
+  padding: 80px 15px;
+}
+
+/* ================= HERO (INDEX) ================= */
+
+.hero {
+  min-height: 70vh;
+  padding: 60px 20px;
+  background:
+    linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)),
+    url("../images/hero.jpg");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+}
+
+.welcome-user{
+    color: #e8ffe8;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    letter-spacing: 0.3px;
+}
+
+.hero-content {
+  background: rgba(255,255,255,0.1);
+  padding: 30px;
+  border-radius: 30px;
+  backdrop-filter: blur(5px);
+}
+
+.hero h1 {
+  font-size: clamp(32px, 6vw, 56px);
+  font-weight: 700;
+}
+
+.hero p {
+  font-size: 16px;
+}
+
+/* ================= BUTTON ================= */
+
+.btn-main,
+.cta-btn,
+.btn-success {
+  background: #28a745;
+  color: white !important;
+  padding: 12px 28px;
+  border-radius: 30px;
+  font-weight: 600;
+  border: none;
+  transition: 0.3s ease;
+}
+
+.btn-main:hover,
+.cta-btn:hover,
+.btn-success:hover {
+  background: #218838;
+  transform: translateY(-2px);
+}
+
+/* ================= INDEX FEATURES (FIXED FLOATING STYLE) ================= */
+
+.pinterest-card {
+  display: block;
+  text-decoration: none !important; /* 🔥 FIX BLUE TEXT */
+  color: white !important;
+
+  position: relative;
+  border-radius: 22px;
+  overflow: hidden;
+  height: 240px; /* 🔥 smaller = aesthetic */
+  cursor: pointer;
+  transition: 0.3s ease;
+
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+/* image */
+.pinterest-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: 0.4s ease;
+}
+
+/* overlay text */
+.pinterest-card .overlay {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 15px;
+  background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
+}
+
+/* text */
+.pinterest-card h5 {
+  margin: 0;
+  font-weight: 600;
+  font-size: 18px;
+  color: white;
+}
+
+.pinterest-card p {
+  margin: 0;
+  font-size: 13px;
+  opacity: 0.9;
+  color: white;
+}
+
+/* hover */
+.pinterest-card:hover {
+  transform: translateY(-8px);
+}
+
+.pinterest-card:hover img {
+  transform: scale(1.05);
+}
+
+/* mobile */
+@media (max-width: 768px) {
+  .pinterest-card {
+    height: 200px;
+  }
+}
+
+/* ================= RECIPE ================= */
+
+.recipe-card {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.recipe-card img {
+  width: 100%;
+  height: 230px;
+  object-fit: cover;
+}
+
+.recipe-overlay {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 15px;
+  background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
+  color: white;
+}
+
+.recipe-card:hover {
+  transform: translateY(-5px);
+}
+
+/* ================= NUTRITION ================= */
+
+.nutrition-card {
+  background: rgba(255,255,255,0.92);
+  padding: 28px;
+  border-radius: 25px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  max-width: 900px;
+  margin: auto;
+}
+
+.nutrition-card label {
+  display: block;
+}
+
+.form-label {
+  color: #2c3e50;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+/* make dropdown text slightly darker */
+select {
+  color: #000;
+  font-weight: 500;
+}
+
+/* placeholder styling */
+input::placeholder {
+  color: #aaa;
+  font-size: 0.9rem;
+}
+
+/* improve spacing between form groups */
+input,
+select {
+  margin-bottom: 10px;
+}
+
+/* inputs */
+input,
+select {
+  border-radius: 16px !important;
+  padding: 12px !important;
+  border: 1px solid #e6e6e6 !important;
+}
+
+/* list */
+.list-group-item {
+  border-radius: 15px !important;
+  margin-bottom: 10px;
+  border: none;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+/* progress */
+.progress {
+  border-radius: 20px;
+}
+
+.progress-bar {
+  transition: width 0.4s ease;
+}
+
+/* status */
+#statusText {
+  font-weight: 500;
+  margin-top: 8px;
+}
+
+/* chart */
+#ringChart {
+  max-width: 180px;
+  margin: auto;
+}
+
+/* ================= NAVBAR MOBILE ================= */
+
+@media (max-width: 991px) {
+
+  .navbar-collapse {
+    background: #28a745;
+    padding: 15px;
+    border-radius: 15px;
+    margin-top: 10px;
+  }
+
+  .nav-link {
+    color: white !important;
+    padding: 10px;
+  }
+
+  .nav-link.active {
+    background: rgba(255,255,255,0.2);
+    border-radius: 10px;
+  }
+}
+
+/* ======================FITNESS PAGE====================== */
+
+.fitness-card{
+    background:#ffffff;
+    border-radius:20px;
+    padding:35px;
+    box-shadow:0 8px 25px rgba(0,0,0,.08);
+}
+
+.fitness-card h2{
+    color:#198754;
+    font-weight:700;
+}
+
+.section-title{
+    color:#198754;
+    font-weight:600;
+    margin-top:35px;
+    margin-bottom:15px;
+}
+
+.workout-box{
+    background:#f8f9fa;
+    border-radius:15px;
+    padding:20px;
+    min-height:220px;
+    border:1px solid #e9ecef;
+}
+
+.workout-box ul{
+    padding-left:20px;
+    margin-bottom:0;
+}
+
+.workout-box li{
+    margin-bottom:10px;
+    font-size:16px;
+}
+
+.tip-box{
+    background:#e8f5e9;
+    border-left:6px solid #198754;
+    border-radius:12px;
+    padding:18px;
+    font-size:16px;
+    font-weight:500;
+}
+
+.exercise-card{
+    border:none;
+    border-radius:12px;
+    transition:.3s;
+    cursor:pointer;
+    margin-bottom:10px;
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+
+.exercise-card:hover{
+    transform:translateY(-3px);
+    box-shadow:0 6px 18px rgba(0,0,0,.15);
+}
+
+.progress-card{
+    background:#ffffff;
+    border-radius:18px;
+    padding:20px;
+    box-shadow:0 4px 15px rgba(0,0,0,.08);
+}
+
+#progressChart{
+    max-height:300px;
+}
+
+.btn-success{
+    border-radius:10px;
+}
+
+.form-control,
+.form-select{
+    border-radius:10px;
+}
+
+.search-box{
+    margin-bottom:20px;
+}
+
+.video-card{
+    border:none;
+    border-radius:15px;
+    overflow:hidden;
+    box-shadow:0 5px 18px rgba(0,0,0,.1);
+    transition:.3s;
+}
+
+.video-card:hover{
+    transform:translateY(-5px);
+}
+
+.video-card iframe{
+    width:100%;
+    height:230px;
+}
+
+@media(max-width:768px){
+
+.fitness-card{
+    padding:20px;
+}
+
+.video-card iframe{
+    height:200px;
+}
+
+}
+
+/* ===============================
+   NUTRICARE CHATBOT
+================================ */
+
+/* Chat bubble */
+.chat-button {
+    position: fixed;
+    right: 25px;
+    bottom: 25px;
+
+    width: 60px;
+    height: 60px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: #28a745;
+    color: white;
+
+    font-size: 26px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+
+    z-index: 9999;
+
+    transition: 0.3s ease;
+}
+
+.chat-button:hover {
+    background: #218838;
+    transform: translateY(-3px);
+}
+
+/* Hide bubble when chat is open */
+.chat-button.hidden {
+    display: none;
+}
+
+
+/* Chat window */
+.chat-window {
+    position: fixed;
+
+    right: 25px;
+    bottom: 25px;
+
+    width: 360px;
+    height: 500px;
+
+    background: white;
+
+    border-radius: 20px;
+
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+
+    z-index: 9999;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transform: translateY(20px);
+
+    transition: 0.3s ease;
+}
+
+
+/* Show chatbot */
+.chat-window.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+
+/* Chat header */
+.chat-header {
+    background: #28a745;
+    color: white;
+
+    padding: 16px 18px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.chat-header strong {
+    display: block;
+    font-size: 16px;
+}
+
+.chat-header small {
+    font-size: 12px;
+    opacity: 0.9;
+}
+
+
+/* Close button */
+.chat-close {
+    background: transparent;
+    border: none;
+
+    color: white;
+
+    font-size: 28px;
+
+    cursor: pointer;
+
+    line-height: 1;
+}
+
+
+/* Chat body */
+.chat-body {
+    flex: 1;
+
+    padding: 20px;
+
+    overflow-y: auto;
+
+    background: #fff7fa;
+}
+
+
+/* Bot message */
+.bot-message {
+    background: white;
+
+    padding: 12px 15px;
+
+    border-radius: 15px;
+
+    max-width: 85%;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+}
+
+
+/* Input area */
+.chat-input-area {
+    display: flex;
+
+    padding: 12px;
+
+    background: white;
+
+    border-top: 1px solid #eee;
+
+    gap: 8px;
+}
+
+
+/* Input */
+.chat-input-area input {
+    flex: 1;
+
+    margin: 0 !important;
+
+    border: 1px solid #ddd !important;
+
+    border-radius: 20px !important;
+
+    padding: 10px 15px !important;
+
+    outline: none;
+}
+
+
+/* Send button */
+.chat-input-area button {
+    width: 42px;
+    height: 42px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: #28a745;
+    color: white;
+
+    cursor: pointer;
+
+    font-size: 18px;
+}
+
+
+/* Mobile */
+@media (max-width: 576px) {
+
+    .chat-window {
+        right: 15px;
+        bottom: 15px;
+
+        width: calc(100% - 30px);
+        height: 70vh;
+    }
+
+    .chat-button {
+        right: 20px;
+        bottom: 20px;
+    }
+
+}
+
+/* ===============================
+   CHATBOT MESSAGES
+================================ */
+
+.user-message {
+    background: #28a745;
+    color: white;
+
+    padding: 12px 15px;
+
+    border-radius: 15px;
+
+    max-width: 85%;
+
+    margin-left: auto;
+    margin-bottom: 12px;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+
+    word-wrap: break-word;
+}
+
+.bot-message {
+    margin-bottom: 12px;
+}
