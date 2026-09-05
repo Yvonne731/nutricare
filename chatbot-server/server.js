@@ -10,7 +10,22 @@ app.use(express.json());
 
 const projectId = "nutricare-26a6a";
 
-const sessionsClient = new dialogflow.SessionsClient();
+console.log(
+    "GOOGLE_SERVICE_ACCOUNT_JSON exists:",
+    !!process.env.GOOGLE_SERVICE_ACCOUNT_JSON
+);
+
+let googleCredentials = undefined;
+
+if (process.env.GOOGLE_SERVICE_ACCOUNT_JSON) {
+    googleCredentials = JSON.parse(
+        process.env.GOOGLE_SERVICE_ACCOUNT_JSON
+    );
+}
+
+const sessionsClient = new dialogflow.SessionsClient({
+    credentials: googleCredentials
+});
 
 let lastMealType = null;
 
