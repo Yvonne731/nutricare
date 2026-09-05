@@ -3,7 +3,7 @@ const cors = require("cors");
 const dialogflow = require("@google-cloud/dialogflow");
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
@@ -345,10 +345,6 @@ app.get("/", (req, res) => {
 // START SERVER
 // ==========================================
 
-app.listen(PORT, () => {
-
-    console.log(
-        `NutriCare chatbot server running at http://localhost:${PORT}`
-    );
-
+app.listen(PORT, "0.0.0.0", () => {
+    console.log(`NutriCare chatbot server running on port ${PORT}`);
 });
