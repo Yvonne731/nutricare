@@ -30,6 +30,7 @@ if (process.env.GOOGLE_SERVICE_ACCOUNT_JSON) {
 }
 
 const sessionsClient = new dialogflow.SessionsClient({
+    projectId: projectId,
     credentials: googleCredentials
 });
 
