@@ -99,7 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
             const result = await fetch(
-                "http://localhost:3000/chat",
+                "https://digestive-giving-hippopotamus.abasthan.app/chat",
                 {
                     method: "POST",
 
