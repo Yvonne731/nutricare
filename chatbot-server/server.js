@@ -10,10 +10,16 @@ app.use(express.json());
 
 const projectId = "nutricare-26a6a";
 
+console.log("=== GOOGLE CREDENTIAL TEST ===");
 console.log(
     "GOOGLE_SERVICE_ACCOUNT_JSON exists:",
     !!process.env.GOOGLE_SERVICE_ACCOUNT_JSON
 );
+console.log(
+    "GOOGLE_APPLICATION_CREDENTIALS exists:",
+    !!process.env.GOOGLE_APPLICATION_CREDENTIALS
+);
+console.log("==============================");
 
 let googleCredentials = undefined;
 
